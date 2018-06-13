@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>ThingsSpeak - Control</title>
+  <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+
+<body>
+
+  <html>
+
+<head>
+    <meta content="text/html; charset=UTF-8" http-equiv="content-type">
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="https://code.highcharts.com/stock/highstock.js"></script>
+    <script src="https://code.highcharts.com/stock/modules/exporting.js"></script>
+    <script src="https://rawgithub.com/highslide-software/export-csv/master/export-csv.js"></script>
+    <!-- Core JS -->
+    <script src="./highchartsSG.js"></script>
+    <!-- Materialize CSS Framework  -->
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/css/materialize.min.css">
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/js/materialize.min.js"></script>
+
+    <title>ThingSpeak Sensors</title>
+</head>
+
+<body style="background-color: white;">
+
+    <header>
+
+        <div class="logo">
+        </div>
+        <div class="nav-bar">
+            <ul>
+                <li><a href="addsymptom.html">Add Occuring Symptoms</a></li>
+                <li><a href="index.html">Dashboard</a></li>
+            </ul>
+
+        </div>
+
+
+    </header>
+    <center>
+        <div class="patient-details">
+        <div class="pat-photo"></div>
+        <div class="pat-text">
+            <div class="pat-name">John Doe</div>
+            <div class="pat-type">Patient</div>
+        </div>
+
+        <div class="age">22 Years</div>
+
+
+    </div>    
+   <div class="dividers"></div>
+
+   <form autocomplete="off" action="">
+  <div class="autocomplete" style="width:800px;">
+    <div class="heading">What kind of chest pain did you experience?<br/>
+      Value 1: Typical Angina (Chest Portion)<br/>
+      Value 2: A-Typical Angina <br/>
+      Value 3: Non Anginal Pain <br/>
+      Value 4: Asymptomatic Pain <br/>
+      </div><br/>
+    <input id="myInput" type="text" name="myCountry" placeholder="Chest Pain Type (1-4)">
+  </div>
+  <div class="autocomplete" style="width:800px;">
+    <div class="heading">Last known cholestrol level? (mg/dl)
+      </div><br/>
+    <input id="myInput1" type="text" name="myCountry" placeholder="Cholestrol Level">
+  </div>
+  <div class="autocomplete" style="width:800px;">
+    <div class="heading">Was your last fasting blood sugar more than 120mg/dl? (1=Yes, 0 = No)
+      </div><br/> 
+    <input id="myInput2" type="text" name="myCountry" placeholder="Blood Sugar">
+  </div>
+   <br/>
+  <input type="submit" onclick="write_to_excel(event);">
+</form>
+</center>
+</body>
+  <script type="text/javascript">
+   
+  </script>
+  
+
+    <script  src="js/index.js"></script>
+    <script>
+
+        function write_to_excel(e) 
+{
+  e.preventDefault();
+  var a = $('#myInput').val();
+  var b = $('#myInput1').val();
+  var c = $('#myInput2').val();
+   $.ajax({
+      type:'PUT',
+      data:'{"chestpain":"'+ a +'","cholestrol":"'+ b +'","fbs":"' + c +' "}',
+      contentType:"application/json; charset=utf-8",
+      dataType:"json",
+      url:'https://api.myjson.com/bins/13dg5y',
+      success:function(data){
+        console.log(data);
+      }
+    });    
+}
+
+</script>
+
+
+
+
+</body>
+
+</html>

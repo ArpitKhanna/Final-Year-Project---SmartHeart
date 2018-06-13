@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>ThingsSpeak - Control</title>
+  <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+
+<body>
+
+  <html>
+
+<head>
+    <meta content="text/html; charset=UTF-8" http-equiv="content-type">
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="https://code.highcharts.com/stock/highstock.js"></script>
+    <script src="https://code.highcharts.com/stock/modules/exporting.js"></script>
+    <script src="https://rawgithub.com/highslide-software/export-csv/master/export-csv.js"></script>
+    <!-- Core JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js"></script>        
+    <script src="./highchartsSG.js"></script>
+    <!-- Materialize CSS Framework  -->
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/css/materialize.min.css">
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/js/materialize.min.js"></script>
+
+    <title>ThingSpeak Sensors</title>
+</head>
+
+<body style="background-color: white;">
+
+    <header>
+
+        <div class="logo">
+        </div>
+        <div class="nav-bar">
+            <ul>
+                <li><a href="addsymptom.html">Add Occuring Symptoms</a></li>
+                <li><a href="index.html">Dashboard</a></li>
+            </ul>
+
+        </div>
+
+
+    </header>
+    <center>
+    <div class="patient-details">
+        <div class="pat-photo"></div>
+        <div class="pat-text">
+            <div class="pat-name">John Doe</div>
+            <div class="pat-type">Patient</div>
+        </div>
+
+        <div class="age">22 Years</div>
+
+
+    </div>    
+<div class="dividers"></div>
+    <div class="wrapper">
+    <!-- <div id="chart-container" style="height: 500px; width: 600px;" > -->
+
+                    <canvas id="myChart" width="1000" height="400"></canvas>
+    </div>
+
+        
+    <div class="value-attrib">
+
+        <div class="body-temp cards">
+            <div class="title">Body Temperature</div>
+            <div class="val">99</div>
+            <div class="sub-val">DS18B20 Sensor</div>
+        </div>
+        <div class="humidity cards">
+            <div class="title">Humidity</div>
+            <div class="val">99</div>
+            <div class="sub-val">DHT11 Sensor</div>
+        </div>
+        <div class="room-temp cards">
+            <div class="title">Room Temperature</div>
+            <div class="val">99</div>
+            <div class="sub-val">DHT11 Sensor</div>
+        </div>
+        <div class="pulse cards">
+            <div class="title">Pulse</div>
+            <div class="val">99</div>
+            <div class="sub-val">SEN-11574 Sensor</div>
+        </div>
+
+    </div>
+    <div style="margin:2% 2%" id="below chart">
+        <div class="row">
+			<input id="Update" name="Update" type="checkbox" />
+            <label for="Update" style="margin:0 8px">Update Charts (Latency)</label>
+        </div>
+        <div class="row">
+           <div class="">
+            <select id="Channel Select">
+              <option value="" disabled selected></option>
+            </select>
+          </div>
+            
+        </div>
+    </div>
+
+    
+
+</div>
+</center>
+</body>
+
+</html>
+  
+  
+
+    <script  src="js/index.js"></script>
+    <script type="text/javascript">
+       function getData(){
+        console.log("Updated@");
+         $.ajax({
+            type:'GET',
+            url:'https://api.thingspeak.com/channels/478544/feeds.json?results=2',
+            success:function(data){
+                console.log(data);
+                //Change values here, tell what to add where? field1 ki value chahiye 
+                document.querySelectorAll('.val')[2].innerHTML =  parseInt(data.feeds[0].field1);
+                document.querySelectorAll('.val')[1].innerHTML =  parseInt(data.feeds[0].field2);
+                document.querySelectorAll('.val')[0].innerHTML =  parseInt(data.feeds[0].field3);
+                document.querySelectorAll('.val')[3].innerHTML =  parseInt(data.feeds[0].field4);
+                $('body > center > div.wrapper > div.value-attrib > div.body-temp.cards > div.sub-val').val = "Test";
+            }
+        });
+       } 
+
+       getData();
+
+       setInterval(getData, 2000);
+       
+
+    </script>
+
+
+
+</body>
+
+</html>
